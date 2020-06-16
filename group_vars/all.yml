@@ -18,7 +18,7 @@ version: "{{ lookup('env', 'OPENSHIFT_VERSION') | default('4.4.4', true) }}"
 # Empty value results in playbook failing with error message.
 build: "{{ lookup('env', 'OPENSHIFT_BUILD') | default('ga', true) }}"
 # Your pull secret, https://cloud.redhat.com/openshift/install
-pullsecret: "{{ lookup('env', 'PULL_SECRET') | quote }}"
+pullsecret: "'{{ lookup('env', 'PULL_SECRET') }}'"
 # This variable is used to point to the foreman server that is used to reimage nodes. This variables is useful in two cases
 # 1. When the first node in your allocation (provisioning host) is not having RHEL 8.1 OS, it is automatically rebuilt with 
 # RHEL 8.1 as the OCP installer expects the provisioning host to be RHEL 8.1. In some other cases, maybe when you have an 
