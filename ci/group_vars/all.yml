@@ -29,7 +29,7 @@ pullsecret: '{"auths": {"cloud.openshift.com": {"auth": "b3BlbnNoaWZ0LXJlbGVhc2U
 # prefix even if url in the email has http. Also, the url in email might have the '/hosts' path appended, we can remove 'hosts' from url 
 # and have it be https://foreman.example.com for example. If you are having trouble figuring out this variable please look for the 
 # pastebins under the "Modifying the ansible-ipi-install/group_vars/all.yml file" section in README.md
-foreman_url: "{{ lookup('env', 'FOREMAN_URL'}}"
+foreman_url: "{{ lookup('env', 'FOREMAN_URL') }}"
 # The automation automatically rebuilds provisioner node to RHEL 8.1 if not already RHEL 8.1 (see foreman_url variable)
 # However you can also force a reprovsioning of the provisioner node for redeployment scenarios
 rebuild_provisioner: "{{ lookup('env', 'REBUILD_PROVISIONER') | default(false, true)| bool }}"
