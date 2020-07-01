@@ -1,0 +1,41 @@
+# Your allocation name/number in the shared labs
+cloud_name: cloud00
+# Lab name, typically can be alias or scale
+lab_name: alias
+# Default root password to your nodes in the lab allocation so that keys can be added automatically for ansible to run
+ansible_ssh_pass: 100yard-
+# Location of the private key of the user running the ansible playbook, leave default
+ansible_ssh_key: "{{ ansible_user_dir }}/.ssh/id_rsa"
+# The version of the openshift-installer, undefined or empty results in the playbook failing with error message.
+# Values accepted: 'latest-4.3', 'latest-4.4', explicit version i.e. 4.3.0-0.nightly-2019-12-09-035405
+# For reference, https://openshift-release.svc.ci.openshift.org/
+version: "4.4.4"
+# Enter whether the build should use 'dev' (nightly builds) or 'ga' for Generally Available version of OpenShift
+# Empty value results in playbook failing with error message.
+build: "ga"
+# Your pull secret, https://cloud.redhat.com/openshift/install
+pullsecret: '{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K3NtYWxsZW5pcmVkaGF0Y29tMWVhdnNsZnJucWx6Y29lbzdlZGZ5cXV5bHQyOkU4WUxFS1ROT1I5RjA3WEhHNVNGWkE2Wk5EVUxBMDNJWlJGOVpLSzFZQlFLVE9VWEtQRDBLSUQ2SDVXNk4yNUc=","email":"smalleni@redhat.com"},"quay.io":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K3NtYWxsZW5pcmVkaGF0Y29tMWVhdnNsZnJucWx6Y29lbzdlZGZ5cXV5bHQyOkU4WUxFS1ROT1I5RjA3WEhHNVNGWkE2Wk5EVUxBMDNJWlJGOVpLSzFZQlFLVE9VWEtQRDBLSUQ2SDVXNk4yNUc=","email":"smalleni@redhat.com"},"registry.connect.redhat.com":{"auth":"Nzc1NjMxNnx1aGMtMUVBdnNsRnJuUUx6Q29lbzdlZEZZUVV5bHQyOmV5SmhiR2NpT2lKU1V6VXhNaUo5LmV5SnpkV0lpT2lJMFpqaGhOVGhtTVdFM09HRTBOakUyT0dZNU1ETmpObVptTXpRM05UQTVPU0o5LnJORktPMVdoNHI0Uy01dUl4ajk1QmYxaVhWaUNCbEdteV9TRHNyYjFLU0lIM3ZublYyTHFQSUhsVUJReE9Ca25ZN0t6VWw5MWVnZTlLcmY4VkhwSmJVSFc4UldQZUdNeFV4UEdpTVJsOVJaZGpKNDBNWW5Dc3FKWUF3djFVSkNTRlNGTl9aYlg0NjNYakUwTWxCanh4a1JfTGN2TzNPODM1WDBISUJsbzB4NzlyQUtTV1luaHhiVHhvNkJ5bkNVUTl2YURndjJhek9TT1N5T0pwajgwa0syc3g4SkhnQ1MtNG1TVmtxdS02VTJpcmFhcy1vSXhVMzZxMWtadHI0aDlZMWlLb2ZlQVRSNkZzN1ZtNUVBODlOYnFjaW85QlpHNnBlMVF1SEdSalh4dUxTRVlPbklSc3NacS0ycG52emQwMUszb1A2a1ZCMGRCZ0gwQ25UWEF3VFdnSjJXeGJTdW9wTHFtcktnYlROclRNMW5fWjU3ZEtXOWtFUTVseHB2UGlWaEh1MlRLMDVTMmNxSzFzeElDZGtDWUI2TlZMWGxzRmpPQTBtcHI5V1dUbllocndZUElhamZuZnhqTm0yWlFMeS1qdDZXOWplem5jOUxEdEVpMmtYdF9iSTA2TlpOTkJvbTVtOTZNQ2M3YXVCZ3dVVFRKSDV2b3JxUlQyQlk0dXdiaUJPbXByQUNyZGZUUkRraXd6eG5EQnA1MmpGbndDY1BkR2trNTdMU0pTWC12N0RLWFo0SGoya1Npb0RIQTJCWkRrWXlKYjF2NkRvNVAxaE8zd0pZTW14WU1QeFY0MmljSmU0TVY4UjVpN24wQzcyQTVnUHVodktMZVp6cEo0SFozNTNEVFNpU3JHeFpfUEhibV9nSktFNTJmaXVKeE9rWllHR1lrZXBZ","email":"smalleni@redhat.com"},"registry.redhat.io":{"auth":"Nzc1NjMxNnx1aGMtMUVBdnNsRnJuUUx6Q29lbzdlZEZZUVV5bHQyOmV5SmhiR2NpT2lKU1V6VXhNaUo5LmV5SnpkV0lpT2lJMFpqaGhOVGhtTVdFM09HRTBOakUyT0dZNU1ETmpObVptTXpRM05UQTVPU0o5LnJORktPMVdoNHI0Uy01dUl4ajk1QmYxaVhWaUNCbEdteV9TRHNyYjFLU0lIM3ZublYyTHFQSUhsVUJReE9Ca25ZN0t6VWw5MWVnZTlLcmY4VkhwSmJVSFc4UldQZUdNeFV4UEdpTVJsOVJaZGpKNDBNWW5Dc3FKWUF3djFVSkNTRlNGTl9aYlg0NjNYakUwTWxCanh4a1JfTGN2TzNPODM1WDBISUJsbzB4NzlyQUtTV1luaHhiVHhvNkJ5bkNVUTl2YURndjJhek9TT1N5T0pwajgwa0syc3g4SkhnQ1MtNG1TVmtxdS02VTJpcmFhcy1vSXhVMzZxMWtadHI0aDlZMWlLb2ZlQVRSNkZzN1ZtNUVBODlOYnFjaW85QlpHNnBlMVF1SEdSalh4dUxTRVlPbklSc3NacS0ycG52emQwMUszb1A2a1ZCMGRCZ0gwQ25UWEF3VFdnSjJXeGJTdW9wTHFtcktnYlROclRNMW5fWjU3ZEtXOWtFUTVseHB2UGlWaEh1MlRLMDVTMmNxSzFzeElDZGtDWUI2TlZMWGxzRmpPQTBtcHI5V1dUbllocndZUElhamZuZnhqTm0yWlFMeS1qdDZXOWplem5jOUxEdEVpMmtYdF9iSTA2TlpOTkJvbTVtOTZNQ2M3YXVCZ3dVVFRKSDV2b3JxUlQyQlk0dXdiaUJPbXByQUNyZGZUUkRraXd6eG5EQnA1MmpGbndDY1BkR2trNTdMU0pTWC12N0RLWFo0SGoya1Npb0RIQTJCWkRrWXlKYjF2NkRvNVAxaE8zd0pZTW14WU1QeFY0MmljSmU0TVY4UjVpN24wQzcyQTVnUHVodktMZVp6cEo0SFozNTNEVFNpU3JHeFpfUEhibV9nSktFNTJmaXVKeE9rWllHR1lrZXBZ","email":"smalleni@redhat.com"},"registry.svc.ci.openshift.org":{"auth":"c3lzdGVtLXNlcnZpY2VhY2NvdW50LWlwdjYtZGVmYXVsdDpleUpoYkdjaU9pSlNVekkxTmlJc0ltdHBaQ0k2SWlKOS5leUpwYzNNaU9pSnJkV0psY201bGRHVnpMM05sY25acFkyVmhZMk52ZFc1MElpd2lhM1ZpWlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl1WVcxbGMzQmhZMlVpT2lKcGNIWTJJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5elpXTnlaWFF1Ym1GdFpTSTZJbVJsWm1GMWJIUXRkRzlyWlc0dGJEbHhhM0VpTENKcmRXSmxjbTVsZEdWekxtbHZMM05sY25acFkyVmhZMk52ZFc1MEwzTmxjblpwWTJVdFlXTmpiM1Z1ZEM1dVlXMWxJam9pWkdWbVlYVnNkQ0lzSW10MVltVnlibVYwWlhNdWFXOHZjMlZ5ZG1salpXRmpZMjkxYm5RdmMyVnlkbWxqWlMxaFkyTnZkVzUwTG5WcFpDSTZJakk0WWpZMk0yUXlMV1pqT1dZdE1URmxPUzA1T0dFNUxUUXlNREV3WVRobE1EQXdNeUlzSW5OMVlpSTZJbk41YzNSbGJUcHpaWEoyYVdObFlXTmpiM1Z1ZERwcGNIWTJPbVJsWm1GMWJIUWlmUS5JTG0tSWQwUUU3cGRsbHBZWmJVWmdoUWptYzJjY19BRWc3WEdlUVhNZ2U5VzV0NmNOVi1uUzc5UXNyVF85ODRqWHlzWThhcFNYR1hFTjY4TC1VeXNmQWNHNEpUSnJ6aks4Mm9uN0d1MjEtWXRRYldJT3hwMnNJb2w4QU5QcWxrNTlncFljNEJYMVhDMVR5WFdBQmpqSWVIQ2QtWWU5ZEYtZ3FySVlrbWZySHZ5SlBzMEVJc1BSXzN4bElFU0FnaDFfMFFSbzk5dkc0Y2xBcFk5R0YxUS1oNzNucnNkX1VpQVFDUFA2Q0FjcDhFXzlKLVdNaVBPbFRUOWJQaEg2emRMa2hzR0E0NXNVZC0tcW9aV1RZRXdSeFgwd21iWkQ0YlZSbDdOMXlmRGxqZm8xcWtMZlBzZXR0MDFuaFo5NjBHZzFCVW9NeVJXcW52cElLcGRBM2FwUUE="}}}'
+# This variable is used to point to the foreman server that is used to reimage nodes. This variables is useful in two cases
+# 1. When the first node in your allocation (provisioning host) is not having RHEL 8.1 OS, it is automatically rebuilt with
+# RHEL 8.1 as the OCP installer expects the provisioning host to be RHEL 8.1. In some other cases, maybe when you have an
+# existing cluster and are trying to reinstall etc, it might be better to start with a clean provisioning host, in which case this variable
+# is also used to reimage the provisioning host in spite of it having RHEL 8.1 on it. This variable changes depending on the lab you are
+# using as each lab has its own foreman server. This URL can be deduced from the lab allocation email you receive when your allocation is
+# ready. It will be under the paragraph "You can also view/manage your hosts via Foreman:" in the email. It is important to use an https
+# prefix even if url in the email has http. Also, the url in email might have the '/hosts' path appended, we can remove 'hosts' from url
+# and have it be https://foreman.example.com for example.
+foreman_url: https://navi.alias.bos.scalelab.redhat.com/
+# The automation automatically rebuilds provisioner node to RHEL 8.1 if not already RHEL 8.1 (see foreman_url variable)
+# However you can also force a reprovsioning of the provisioner node for redeployment scenarios
+rebuild_provisioner: false
+# Number of workers desired, by default all hosts in your allocation except 1 provisioner and 3 masters are used workers
+# However that behaviour can be overrided by explicitly settign the desired number of workers here. For a masters only deploy,
+# set worker_count to 0
+worker_count: 0
+alias:
+#lab specific vars, leave default
+  lab_url: "http://quads11.alias.bos.scalelab.redhat.com"
+scale:
+# lab specific vars, leave default
+  lab_url: "http://quads.rdu2.scalelab.redhat.com"
+
