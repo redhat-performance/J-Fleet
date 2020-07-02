@@ -1,7 +1,3 @@
-# This is the location on the jumphost (ansible controller) where the list 
-# of hosts your lab allocation will be downloaded to in json format. 
-# Leave default, for most cases
-ocpinv_file: "{{ playbook_dir }}/ocpinv.json"
 # Your allocation name/number in the shared labs
 cloud_name: "{{ lookup('env', 'CLOUD_NAME') | default('cloud00', true) }}"
 # Lab name, typically can be alias or scale
