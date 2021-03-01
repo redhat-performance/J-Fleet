@@ -39,3 +39,7 @@ alias:
 scale:
 # lab specific vars, leave default
   lab_url: "http://quads.rdu2.scalelab.redhat.com"
+# set to true to deploy with jumbo frames
+jumbo_mtu: "{{ lookup('env', 'JUMBO_MTU') | default(true) }}"
+# set to true only if you requested a public routable VLAN for your cloud in scale lab
+routable_api: "{{ lookup('env', 'ROUTABLE_API') | default(true) }}"
