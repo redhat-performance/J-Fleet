@@ -33,12 +33,6 @@ rebuild_provisioner: "{{ lookup('env', 'REBUILD_PROVISIONER') | default(false, t
 # However that behaviour can be overrided by explicitly settign the desired number of workers here. For a masters only deploy,
 # set worker_count to 0
 worker_count: "{{ lookup('env', 'WORKER_COUNT') | default(0, true) | int }}"
-alias:
-#lab specific vars, leave default
-  lab_url: "http://quads11.alias.bos.scalelab.redhat.com"
-scale:
-# lab specific vars, leave default
-  lab_url: "http://quads.rdu2.scalelab.redhat.com"
 # set to true to deploy with jumbo frames
 jumbo_mtu: "{{ lookup('env', 'JUMBO_MTU') | default(true) }}"
 # set to true only if you requested a public routable VLAN for your cloud in scale lab
