@@ -3,7 +3,7 @@ cloud_name: "{{ lookup('env', 'CLOUD_NAME') | default('cloud00', true) }}"
 # Lab name, typically can be alias or scale
 lab_name: "{{ lookup('env', 'LAB_NAME') | default('scale', true) }}"
 # Default root password to your nodes in the lab allocation so that keys can be added automatically for ansible to run
-ansible_ssh_pass:  "{{ lookup('env', 'SSH_PASSWORD') | default('password', true) }}"
+ansible_ssh_pass:  "{{ lookup('env', 'ANSIBLE_SSH_PASSWORD') | default('password', true) }}"
 # Location of the private key of the user running the ansible playbook, leave default
 ansible_ssh_key: "{{ lookup('env', 'PRIVATE_KEY') | default(ansible_user_dir + '/.ssh/id_rsa', true) }}"
 # The version of the openshift-installer, undefined or empty results in the playbook failing with error message.
