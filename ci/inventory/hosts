@@ -101,13 +101,13 @@ ovn_hybird_plugin=true
 # Base domain, i.e. example.com
 domain="myocp4.com"
 # Name of the cluster, i.e. openshift
-cluster="vlan605"
+cluster="test"
 # Note: Under some conditions, it may be useful to randomize the cluster name. For instance,
 # when redeploying an existing environment this can help avoid VRID conflicts. You can
 # set the cluster_random boolean below to true to append a random number to you cluster name.
-cluster_random=false
+cluster_random=true
 # The public CIDR address, i.e. 10.1.1.0/21
-extcidrnet="10.1.54.0/24"
+extcidrnet="192.168.216.0/21"
 
 # NOTE: For the RH shared labs, the VIPs below are automated w/ variables
 #       based on the extcidrnet above.
