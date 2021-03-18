@@ -34,6 +34,6 @@ rebuild_provisioner: "{{ lookup('env', 'REBUILD_ORCHESTRATION') | default(false,
 # set worker_count to 0
 worker_count: "{{ lookup('env', 'OPENSHIFT_WORKER_COUNT') | default(0, true) | int }}"
 # set to true to deploy with jumbo frames
-jumbo_mtu: "{{ lookup('env', 'JUMBO_MTU') | default(true) }}"
+jumbo_mtu: "{{ lookup('env', 'JUMBO_MTU') | default(true) | bool }}"
 # set to true only if you requested a public routable VLAN for your cloud in scale lab
-routable_api: "{{ lookup('env', 'ROUTABLE_API') | default(true) }}"
+routable_api: "{{ lookup('env', 'ROUTABLE_API') | default(true) | bool }}"
