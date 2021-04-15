@@ -1,0 +1,179 @@
+---
+# Values accepted: 'latest-4.5', 'latest-4.6', explicit version i.e. 4.3.0-0.nightly-2019-12-09-035405 (must be defined)
+version: "{{ lookup('env', 'OPENSHIFT_RELEASE') | default('4.6.16', true) }}"
+
+# Enter whether the build should use 'dev' (nightly builds) or 'ga' for Generally Available version of OpenShift (must be defined)
+build: "{{ lookup('env', 'OPENSHIFT_BUILD') | default('ga', true) }}"
+
+# Set to true to install nightly Operators and it is effective only for dev-preview builds,
+# if set make sure to provide brew registry password and Index Image Build IDs
+nightly_operator: false
+
+# Required only for nightly operator installtion
+brew_reg_password: ""
+
+# Required only for nightly operator installtion
+iib_id:
+  sriov: 25944    #openshift-sriov-network-operator
+
+# List of operators to install and namespaces they are installed in
+operators:
+  - name: performance-add-on-operator
+    namespace: openshift-performance-addon
+  - name: sriov-network-operator
+    namespace: openshift-sriov-network-operator
+  - name: openshift-virtualization-operator
+    namespace: openshift-cnv
+  - name: cluster-logging-operator
+    namespace:  openshift-logging
+  - name: kafka-operator
+    namespace: amq
+  - name: elasticsearch-operator
+    namespace: openshift-operators-redhat
+
+################################################################################
+# BigIP playbook vars
+################################################################################
+
+bigip_worker:
+  - worker002-fc640
+  - worker003-fc640
+
+bigip_sriov_int: "ens2f1"   # Preferrably baremetal network interface
+bigip_bridge_int: "ens2f1"    # Preferrably baremetal network interface"
+
+################################################################################
+# RHACM install playbook vars
+################################################################################
+# All file locations should be on orchestration host and clusters must be accessible
+# by orchestration host
+rhacm_version: 2.1
+rhacm_redisgraph_memory_limit: "3Gi"
+rhacm_disableHubSelfManagement: false
+hub_cluster_kubeconfig: /home/stack/ocp_clusters/vlan608/auth/kubeconfig
+managed_cluster_name: shiftstack0000
+managed_cluster_vendor: OpenShift
+managed_cluster_kubeconfig: "/home/stack/ocp_clusters/{{managed_cluster_name}}/auth/kubeconfig"
+
+rhacm_downstream_quay_pullsecret: ''
+rhacm_downstream_build: ''
+
+################################################################################
+# RHACM Shiftstack prepare cluster deployment vars
+################################################################################
+rhacm_clusterdeploy_index_start: 0
+rhacm_clusterdeploy_index_count: 1
+# Always lower case for clusterdeploy prefix
+rhacm_clusterdeploy_prefix: sno
+rhacm_clusterdeploy_base_domain: rdu2.scalelab.redhat.com
+rhacm_clusterdeploy_network_type: OVNKubernetes
+rhacm_clusterdeploy_create_ingress: false
+rhacm_clusterdeploy_custom_network: true
+rhacm_clusterdeploy_worker_flavor: sno-6-24-40
+rhacm_clusterdeploy_cis: sno-4.6.6-5
+rhacm_clusterdeploy_image_url: "https://releases-art-rhcos.svc.ci.openshift.org/art/storage/releases/rhcos-4.6/46.82.202011260640-0/x86_64/rhcos-46.82.202011260640-0-openstack.x86_64.qcow2.gz"
+rhacm_clusterdeploy_image_name: sno-rhcos
+rhacm_clusterdeploy_install_limit: 1
+shiftstack_clusterdeploy_public_net_name: public
+
+rhacm_clusterdeploy_hub_cluster_kubeconfig: /home/stack/ocp_clusters/vlan608/auth/kubeconfig
+rhacm_clusterdeploy_hub_cluster_name: vlan608
+rhacm_clusterdeploy_hub_base_domain: rdu2.scalelab.redhat.com
+
+################################################################################
+# Label Node vars:
+################################################################################
+label_node_values: []
+
+
+################################################################################
+# Local-storage vars:
+################################################################################
+local_storage_instances: []
+
+
+################################################################################
+# Prepare Shiftstack for Local-storage vars:
+################################################################################
+shiftstack_cluster: vlan608
+shiftstack_local_storage_node_selector: localstorage=true
+shiftstack_local_storage_device: /dev/nvme0n1
+shiftstack_thin_volume_count: 6
+shiftstack_thin_volume_size: 140g
+
+################################################################################
+# Create Kind VMs vars
+################################################################################
+kind_vm_index_start: 0
+kind_vm_index_count: 1
+kind_vm_prefix: kind2
+kind_vm_image: centos8
+kind_vm_flavor: kind-8-32-60
+kind_vm_keypair_name: kind_private_key
+kind_vm_security_group: kind_security_group
+kind_vm_network: kind_network
+
+################################################################################
+# kind cluster cs_configuration
+################################################################################
+kind_max_count: 9 # 10 max instance
+kind_step_count: 1
+k3d_max_count: 20 # 22 max instance
+k3d_step_count: 1
+
+################################################################################
+# EC2 settings
+################################################################################
+ec2_key_name:
+ec2_instance_type: m4.2xlarge
+ec2_image: ami-066df92ac6f03efca
+ec2_security_group: launch-wizard-1
+ec2_vpc_subnet_id: subnet-817895db
+ec2_region: us-west-1
+ec2_volume_size: 100
+ec2_instance_count: 55
+ec2_tags:
+  Name: scale
+  propose: performance
+
+################################################################################
+# Configure OpenShift Monitoring playbook vars
+################################################################################
+openshift_prometheus_retention_period: 15d
+openshift_prometheus_node_selector: "prom: true"
+# openshift_prometheus_storage_class: prom-sc
+openshift_prometheus_storage_size: 50Gi
+
+################################################################################
+# Kafka playbook vars
+################################################################################
+kafka_storage: "persistent"   # can be either persistent or ephemeral
+kafka_instances:
+  key: kafka
+  value: "true"
+kafka_node_label: 'kafka: "true"'
+
+################################################################################
+# CNF profile
+################################################################################
+# PTP interface (precision time protocol)
+# This is the interface used for ptp4l, in an OpenShift cluster this typically is the baremetal interface
+# but can be any interface that points towards a switch with a ptp grand master clock
+ptp_interface: "eno1"
+# Hugepages
+hugepage_size: "1G"
+hugepage_count "16"
+hugepage_node: "0"
+# NUMA
+# temp workaround for RT kernel bugs that consume too much CPU power: add more isolated cores
+isolated: "1,3,5,7,9-51"
+reserved: "0,2,4,6,8"
+realtime_kernel "true"
+# MachineConfigPool that gets to run more pods
+max_pod_mcp: "worker"
+max_pods: 500
+# NodeSelector and MachineConfigPoolSelector for the PerformanceProfile using realtime kernel 
+# and Hugepages
+perf_mcp_selector: "pools.operator.machineconfiguration.openshift.io/master: "
+perf_node_selector "node-role.kubernetes.io/master: "
+
