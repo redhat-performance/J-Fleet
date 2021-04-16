@@ -20,16 +20,16 @@ iib_id:
 operators:
   - name: performance-add-on-operator
     namespace: openshift-performance-addon
-  - name: sriov-network-operator
-    namespace: openshift-sriov-network-operator
-  - name: openshift-virtualization-operator
-    namespace: openshift-cnv
-  - name: cluster-logging-operator
-    namespace:  openshift-logging
-  - name: kafka-operator
-    namespace: amq
-  - name: elasticsearch-operator
-    namespace: openshift-operators-redhat
+#   - name: sriov-network-operator
+#     namespace: openshift-sriov-network-operator
+#   - name: openshift-virtualization-operator
+#     namespace: openshift-cnv
+#   - name: cluster-logging-operator
+#     namespace:  openshift-logging
+#   - name: kafka-operator
+#     namespace: amq
+#   - name: elasticsearch-operator
+#     namespace: openshift-operators-redhat
 
 ################################################################################
 # BigIP playbook vars
