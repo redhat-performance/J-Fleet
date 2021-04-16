@@ -162,7 +162,7 @@ kafka_node_label: 'kafka: "true"'
 ptp_interface: "eno1"
 # Hugepages
 hugepage_size: "1G"
-hugepage_count "16"
+hugepage_count: "16"
 hugepage_node: "0"
 # NUMA
 # temp workaround for RT kernel bugs that consume too much CPU power: add more isolated cores
