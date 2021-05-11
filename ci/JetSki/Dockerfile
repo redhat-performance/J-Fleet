@@ -63,7 +63,7 @@ WORKDIR ${AIRFLOW_HOME}
 
 RUN usermod -g 0 airflow -G ${AIRFLOW_GID}
 
-USER ${AIRFLOW_UID}
+# USER ${AIRFLOW_UID}
 
 # Done. Now run it.
 # ENTRYPOINT ansible-playbook -i $ansible_dir/inventory/jetski/hosts $ansible_dir/playbook-jetski.yml
