@@ -12,6 +12,8 @@ RUN yum -y install git --nodocs
 RUN yum -y install ipmitool --nodocs
 RUN yum -y install ansible --nodocs
 RUN pip3 install jmespath
+RUN pip3 install psycopg2-binary
+RUN pip3 install apache-airflow[kubernetes]
 
 # Hammercli
 # epel-release is needed, but was installed above.
@@ -32,11 +34,37 @@ RUN git clone https://github.com/redhat-performance/badfish /root/badfish
 WORKDIR /root/badfish
 RUN pip3 install -r requirements.txt
 
-# Commenting JetSki clone and moving it in to Airflow script
+# Commented JetSki clone 
 # ADD https://api.github.com/repos/redhat-performance/JetSki/git/refs/heads/master /root/JetSki-version.json
 # RUN git clone --single-branch --branch master https://github.com/redhat-performance/JetSki.git /root/JetSki
-WORKDIR /root/
+
+# Add Airflow user and directories
+ARG AIRFLOW_HOME=/opt/airflow
+ARG AIRFLOW_UID="50000"
+ARG AIRFLOW_GID="50000"
+ARG AIRFLOW_USER_HOME_DIR=/home/airflow
+ARG AIRFLOW_HOME=/opt/airflow
+
+RUN groupadd --gid "${AIRFLOW_GID}" "airflow" && \
+    useradd "airflow" --uid "${AIRFLOW_UID}" \
+        --gid "${AIRFLOW_GID}" \
+        --home "${AIRFLOW_USER_HOME_DIR}" && \
+# Make Airflow files belong to the root group and are accessible. This is to accommodate the guidelines from
+# OpenShift https://docs.openshift.com/enterprise/3.0/creating_images/guidelines.html
+    mkdir -pv "${AIRFLOW_HOME}"; \
+    mkdir -pv "${AIRFLOW_HOME}/dags"; \
+    mkdir -pv "${AIRFLOW_HOME}/logs"; \
+    chown -R "airflow:root" "${AIRFLOW_USER_HOME_DIR}" "${AIRFLOW_HOME}"; \
+    find "${AIRFLOW_HOME}" -executable -print0 | xargs --null chmod g+x && \
+        find "${AIRFLOW_HOME}" -print0 | xargs --null chmod g+rw
+
+
+WORKDIR ${AIRFLOW_HOME}
+
+RUN usermod -g 0 airflow -G ${AIRFLOW_GID}
+
+USER ${AIRFLOW_UID}
 
 # Done. Now run it.
 # ENTRYPOINT ansible-playbook -i $ansible_dir/inventory/jetski/hosts $ansible_dir/playbook-jetski.yml
-ENTRYPOINT /bin/bash
+# ENTRYPOINT /bin/bash
