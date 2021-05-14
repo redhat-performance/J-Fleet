@@ -1,30 +1,21 @@
-FROM centos:8
+FROM quay.io/centos/centos:8
 
 ENV DISABLE_PODMAN=true
 
-RUN yum -y install python3 --nodocs
-RUN yum -y install gcc platform-python-devel --nodocs # needed for pip build
+RUN dnf -y install python3 gcc platform-python-devel epel-release --nodocs
+RUN dnf --enablerepo=epel -y install sudo sshpass openssh-clients git ipmitool ansible --nodocs
+
 RUN pip3 install update
-RUN yum -y install epel-release --nodocs
-RUN yum --enablerepo=epel -y install sshpass
-RUN yum -y install openssh-clients --nodocs
-RUN yum -y install git --nodocs
-RUN yum -y install ipmitool --nodocs
-RUN yum -y install ansible --nodocs
-RUN pip3 install jmespath
-RUN pip3 install psycopg2-binary
-RUN pip3 install apache-airflow[kubernetes]
+RUN pip3 install jmespath psycopg2-binary apache-airflow[kubernetes] j2cli
 
 # Hammercli
 # epel-release is needed, but was installed above.
-RUN yum install -y https://yum.theforeman.org/releases/2.1/el8/x86_64/foreman-release.rpm
-RUN yum install -y https://yum.theforeman.org/releases/2.1/el8/x86_64/rubygem-hammer_cli-2.1.0-1.el8.noarch.rpm 
-RUN yum install -y http://yum.theforeman.org/releases/2.1/el8/x86_64/rubygem-hammer_cli_foreman-2.1.0-2.el8.noarch.rpm
+RUN dnf install -y --skip-broken https://yum.theforeman.org/releases/2.1/el8/x86_64/foreman-release.rpm \
+        https://yum.theforeman.org/releases/2.1/el8/x86_64/rubygem-hammer_cli-2.1.0-1.el8.noarch.rpm \
+        http://yum.theforeman.org/releases/2.1/el8/x86_64/rubygem-hammer_cli_foreman-2.1.0-2.el8.noarch.rpm
 
-RUN yum install -y rubygem-hammer_cli \
+RUN dnf install -y rubygem-hammer_cli \
 	rubygem-hammer_cli_foreman
-
-RUN pip3 install j2cli
 
 # Done with hammercli. Next badfish
 # Source: https://github.com/redhat-performance/badfish/blob/master/Dockerfile
@@ -58,12 +49,11 @@ RUN groupadd --gid "${AIRFLOW_GID}" "airflow" && \
     find "${AIRFLOW_HOME}" -executable -print0 | xargs --null chmod g+x && \
         find "${AIRFLOW_HOME}" -print0 | xargs --null chmod g+rw
 
-
 WORKDIR ${AIRFLOW_HOME}
-
 RUN usermod -g 0 airflow -G ${AIRFLOW_GID}
+RUN echo "airflow ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# USER ${AIRFLOW_UID}
+USER airflow
 
 # Done. Now run it.
 # ENTRYPOINT ansible-playbook -i $ansible_dir/inventory/jetski/hosts $ansible_dir/playbook-jetski.yml
