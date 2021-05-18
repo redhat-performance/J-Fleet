@@ -6,7 +6,7 @@ RUN dnf -y install python3 gcc platform-python-devel epel-release --nodocs
 RUN dnf --enablerepo=epel -y install sudo sshpass openssh-clients git ipmitool ansible --nodocs
 
 RUN pip3 install update
-RUN pip3 install jmespath psycopg2-binary apache-airflow[kubernetes] j2cli
+RUN pip3 install jmespath psycopg2-binary apache-airflow[kubernetes] j2cli openshift netaddr
 
 # Hammercli
 # epel-release is needed, but was installed above.
