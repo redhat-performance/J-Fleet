@@ -14,8 +14,7 @@ RUN dnf install -y --skip-broken https://yum.theforeman.org/releases/2.1/el8/x86
         https://yum.theforeman.org/releases/2.1/el8/x86_64/rubygem-hammer_cli-2.1.0-1.el8.noarch.rpm \
         http://yum.theforeman.org/releases/2.1/el8/x86_64/rubygem-hammer_cli_foreman-2.1.0-2.el8.noarch.rpm
 
-RUN dnf install -y rubygem-hammer_cli \
-	rubygem-hammer_cli_foreman
+RUN dnf install -y rubygem-hammer_cli rubygem-hammer_cli_foreman
 
 # Done with hammercli. Next badfish
 # Source: https://github.com/redhat-performance/badfish/blob/master/Dockerfile
