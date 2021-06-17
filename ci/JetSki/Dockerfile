@@ -5,8 +5,8 @@ ENV DISABLE_PODMAN=true
 RUN dnf -y install python3 gcc platform-python-devel epel-release --nodocs
 RUN dnf --enablerepo=epel -y install sudo sshpass openssh-clients git ipmitool ansible --nodocs
 
-RUN pip3 install update
-RUN pip3 install jmespath psycopg2-binary apache-airflow[kubernetes] j2cli openshift netaddr
+RUN pip3 install --no-cache-dir update
+RUN pip3 install --no-cache-dir jmespath psycopg2-binary apache-airflow[kubernetes] j2cli openshift netaddr
 
 # Hammercli
 # epel-release is needed, but was installed above.
@@ -22,7 +22,7 @@ RUN dnf install -y rubygem-hammer_cli rubygem-hammer_cli_foreman
 RUN git clone https://github.com/redhat-performance/badfish /root/badfish
 
 WORKDIR /root/badfish
-RUN pip3 install -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Commented JetSki clone 
 # ADD https://api.github.com/repos/redhat-performance/JetSki/git/refs/heads/master /root/JetSki-version.json
